@@ -9,6 +9,8 @@ public class SC_FPSController : MonoBehaviour
     [Header("Movement")]
     public float walkingSpeed = 7.5f;
     public float runningSpeed = 11.5f;
+    bool isRunning;
+    public float howFastGetHungry;
 
     [Header("Gravity_Jumps")]
     public float jumpSpeed = 8.0f;
@@ -22,6 +24,7 @@ public class SC_FPSController : MonoBehaviour
     CharacterController characterController;
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
+    public PlayerStatistic ps;
 
     [HideInInspector]
     public bool canMove = true;
@@ -41,7 +44,15 @@ public class SC_FPSController : MonoBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
         // Press Left Shift to run
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        if(ps.Hunger >= 1 && Input.GetKey(KeyCode.LeftShift))
+        {
+            isRunning = true;
+        }
+        if(!Input.GetKey(KeyCode.LeftShift) || ps.Hunger <= 1)
+        {
+            isRunning = false;
+        }
+
         float curSpeedX = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
@@ -62,6 +73,13 @@ public class SC_FPSController : MonoBehaviour
         if (!characterController.isGrounded)
         {
             moveDirection.y -= gravity * Time.deltaTime;
+        }
+
+        Vector3 moveDirectionCheck = new Vector3(moveDirection.x, 0, moveDirection.z);
+
+        if(moveDirectionCheck != Vector3.zero)
+        {
+            ps.Hunger -= (Time.deltaTime / howFastGetHungry);
         }
 
         // Move the controller

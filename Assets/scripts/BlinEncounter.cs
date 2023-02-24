@@ -5,8 +5,15 @@ using UnityEngine;
 
 public class BlinEncounter : MonoBehaviour
 {
-    void OnTriggerEnter(Collider col)
+    public PlayerStatistic ps;
+    public float HealFromOnePuncake;
+
+    void OnTriggerEnter(Collider other)
     {
-        Destroy(col.gameObject);
+        if(other.tag == "blin")
+        {
+            Destroy(other.gameObject);
+            ps.Hunger += HealFromOnePuncake;
+        }
     }
 }
