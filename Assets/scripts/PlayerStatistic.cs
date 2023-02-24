@@ -21,5 +21,10 @@ public class PlayerStatistic : MonoBehaviour
     void Update()
     {
         hungerSlider.fillAmount = Hunger / maxHunger;
+
+        if(Hunger > maxHunger)
+        {
+            Hunger = maxHunger;
+        }
     }
 }
