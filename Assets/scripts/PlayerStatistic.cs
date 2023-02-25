@@ -7,7 +7,6 @@ public class PlayerStatistic : MonoBehaviour
 {
     public float HP;
     private float maxHP;
-    
     public float Hunger;
     private float maxHunger;
     public Image hungerSlider;
@@ -26,5 +25,6 @@ public class PlayerStatistic : MonoBehaviour
         {
             Hunger = maxHunger;
         }
+        Hunger -= 1*Time.deltaTime;
     }
 }
