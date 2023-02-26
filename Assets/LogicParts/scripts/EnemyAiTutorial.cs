@@ -28,6 +28,8 @@ public class EnemyAiTutorial : MonoBehaviour
     public bool playerInSightRange, playerInAttackRange;
 
     public GameObject OnDeathMenu;
+    public GameObject HungerBar;
+    public GameObject partsCounter;
 
     private void Awake()
     {
@@ -95,6 +97,8 @@ public class EnemyAiTutorial : MonoBehaviour
     private void ResetAttack()
     {
         OnDeathMenu.SetActive(true);
+        HungerBar.SetActive(false);
+        partsCounter.SetActive(false);
         alreadyAttacked = false;
     }
 

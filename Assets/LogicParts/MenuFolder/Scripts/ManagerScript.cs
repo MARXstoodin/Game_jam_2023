@@ -11,7 +11,6 @@ public class ManagerScript : MonoBehaviour
 
     public void CloseGame()
     {
-        UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
 

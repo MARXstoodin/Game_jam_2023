@@ -24,6 +24,7 @@ public class SelectionScript : MonoBehaviour
     public bool handingAnyThing = false;
     public GameObject flashlight;
     public GameObject lighting;
+    public GameObject burnUpFireText;
     public GameObject campfire;
 
     public GameObject winMenu;
@@ -131,6 +132,7 @@ public class SelectionScript : MonoBehaviour
 
         if(parts == 7)
         {
+            burnUpFireText.SetActive(true);
             lighting.SetActive(true);
         }
 
