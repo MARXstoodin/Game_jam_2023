@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class ManagerScript : MonoBehaviour
 {
     public GameObject settingsMenu;
+    public GameObject startStory;
+    public GameObject fireSound;
 
     public void CloseGame()
     {
@@ -25,8 +27,18 @@ public class ManagerScript : MonoBehaviour
         }
     }
 
+    public void showStart()
+    {
+        startStory.SetActive(true);
+        fireSound.SetActive(false);
+    }
+
     public void StartGame()
     {
         SceneManager.LoadScene(1);
+    }
+    public void ToLobby()
+    {
+        SceneManager.LoadScene(0);
     }
 }

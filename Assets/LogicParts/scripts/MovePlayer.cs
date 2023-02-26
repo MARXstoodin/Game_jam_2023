@@ -9,6 +9,7 @@ public class MovePlayer : MonoBehaviour
 
     public float moveSpeed;
     public float groundDrag;
+    public float walkSpeed;
     public float runSpeed;
     public float stamina;
 
@@ -39,6 +40,8 @@ public class MovePlayer : MonoBehaviour
     [Header("PlayerPoints")]
     public static float HP = 100;
     public Image HB;
+
+    public PlayerStatistic playerStat;
 
     void Start()
     {
@@ -80,7 +83,6 @@ public class MovePlayer : MonoBehaviour
     private void FixedUpdate()
     {
         PlayerMove();
-        //STimg.fillAmount = stamina / 100f;
     }
 
     private void PlayerMove()
@@ -89,30 +91,22 @@ public class MovePlayer : MonoBehaviour
 
         if (grounded)
         {
-            if (Input.GetKey(KeyCode.LeftShift) && stamina > 1)
+            if (Input.GetKey(KeyCode.LeftShift) && playerStat.Hunger > 0)
             {
-                stamina -= Time.deltaTime * 12;
+                moveSpeed = runSpeed;
+                playerStat.Hunger -= Time.deltaTime * 4f;
                 rb.AddForce(moveDirection.normalized * runSpeed * 10f, ForceMode.Force);
-
             }
-            else if(verticalInput == 0 && horiznotalInput == 0)
+            else if(!Input.GetKey(KeyCode.LeftShift))
             {
-                if (stamina < 100.0001)
-                {
-                    stamina += Time.deltaTime * 20;
-                }
-            }
-            else
-            {
+                moveSpeed = walkSpeed;
                 rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
             }
-
             if (verticalInput != 0 && horiznotalInput != 0)
             {
 
             }
         }
-
         else if (!grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);

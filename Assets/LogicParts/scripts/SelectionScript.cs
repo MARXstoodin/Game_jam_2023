@@ -17,11 +17,16 @@ public class SelectionScript : MonoBehaviour
     private Transform _selection;
     private PickableObject selectionInfo;
     private int parts = 0;
+    public Text partsCounter;
+
+    public EnemyAiTutorial enemyScript;
 
     public bool handingAnyThing = false;
     public GameObject flashlight;
     public GameObject lighting;
     public GameObject campfire;
+
+    public GameObject winMenu;
 
     [Header("Stick_1")]
     public GameObject stickInHands;
@@ -64,9 +69,14 @@ public class SelectionScript : MonoBehaviour
     public GameObject headPlacePosition;
     public GameObject headOnFire;
     public GameObject headInForest;
+
+    public GameObject vendizel;
+    public GameObject directLight;
+    public GameObject chuceloInFire;
     
     private void Awake()
     {
+        RenderSettings.fog = true;
         shortStickInForest.SetActive(false);
         torsoInForest.SetActive(false);
         skirtInForest.SetActive(false);
@@ -75,8 +85,33 @@ public class SelectionScript : MonoBehaviour
         headInForest.SetActive(false);
     }
 
+    void Win()
+    {
+        directLight.GetComponent<Animator>().enabled = true;
+        RenderSettings.fog = false;
+        Invoke(nameof(InFire), 3);
+    }
+
+    void InFire()
+    {
+        chuceloInFire.SetActive(true);
+        Invoke(nameof(showWinMenu), 4);
+    }
+
+    void showWinMenu()
+    {
+        winMenu.SetActive(true);
+    }
+
     void Update()
     {
+        partsCounter.text = parts + " / 7";
+
+        if(parts >= 6)
+        {
+            enemyScript.sightRange = 999999;
+        }
+
         if(_selection != null)
         {
             var selectionRenderer = _selection.GetComponent<Renderer>();
@@ -120,6 +155,7 @@ public class SelectionScript : MonoBehaviour
                         {
                             Destroy(selection.gameObject);
                             printText.text = "";
+                            GetComponent<PlayerStatistic>().Hunger += 40;
                         }
                     }
                     if(selectionInfo.objectsName == "Burn campfire on (Needed lighter)")
@@ -127,6 +163,8 @@ public class SelectionScript : MonoBehaviour
                         if(Input.GetKeyDown(KeyCode.E) && parts == 7)
                         {
                             campfire.SetActive(true);
+                            Destroy(vendizel);
+                            Invoke(nameof(Win), 5f);
                         }
                     }
                     if(Input.GetKeyDown(KeyCode.E) && parts == 7)

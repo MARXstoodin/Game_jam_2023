@@ -8,7 +8,7 @@ public class PlayerStatistic : MonoBehaviour
     public float HP;
     private float maxHP;
     public float Hunger;
-    private float maxHunger;
+    public float maxHunger;
     public Image hungerSlider;
 
     void Start()
@@ -25,6 +25,20 @@ public class PlayerStatistic : MonoBehaviour
         {
             Hunger = maxHunger;
         }
-        Hunger -= 1*Time.deltaTime;
+        if(Hunger <= 0)
+        {
+            Hunger = 0;
+        }
+        Hunger -= 0.3f * Time.deltaTime;
+    }
+
+    public void GetDamage()
+    {
+
+    }
+
+    public void Die()
+    {
+
     }
 }

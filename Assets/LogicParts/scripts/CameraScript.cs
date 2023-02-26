@@ -7,12 +7,16 @@ public class CameraScript : MonoBehaviour
     public float sensX;
     public float sensY;
 
+    public bool killed;
+
     public Transform orientation;
 
     float xRotation;
     float yRotation;
 
     public GameObject settingsMenu;
+    public GameObject foodBar;
+    public GameObject pCounter;
 
     void Start()
     {
@@ -29,20 +33,31 @@ public class CameraScript : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -25f, 25f);
 
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        if(!killed)
+        {
+            transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+            orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        }
+        if(killed)
+        {
+
+        }
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             if (settingsMenu.active)
             {
                 settingsMenu.SetActive(false);
+                pCounter.SetActive(true);
+                foodBar.SetActive(true);
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
             }
             else if (!settingsMenu.active)
             {
                 settingsMenu.SetActive(true);
+                pCounter.SetActive(false);
+                foodBar.SetActive(false);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
             }
