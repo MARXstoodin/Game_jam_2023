@@ -100,6 +100,8 @@ public class EnemyAiTutorial : MonoBehaviour
         HungerBar.SetActive(false);
         partsCounter.SetActive(false);
         alreadyAttacked = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     public void TakeDamage(int damage)

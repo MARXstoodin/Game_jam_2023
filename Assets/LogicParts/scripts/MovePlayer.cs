@@ -97,7 +97,7 @@ public class MovePlayer : MonoBehaviour
                 playerStat.Hunger -= Time.deltaTime * 2f;
                 rb.AddForce(moveDirection.normalized * runSpeed * 10f, ForceMode.Force);
             }
-            else if(!Input.GetKey(KeyCode.LeftShift))
+            else
             {
                 moveSpeed = walkSpeed;
                 rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);

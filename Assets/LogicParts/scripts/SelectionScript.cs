@@ -74,7 +74,8 @@ public class SelectionScript : MonoBehaviour
     public GameObject vendizel;
     public GameObject directLight;
     public GameObject chuceloInFire;
-    
+
+
     private void Awake()
     {
         RenderSettings.fog = true;
@@ -102,13 +103,15 @@ public class SelectionScript : MonoBehaviour
     void showWinMenu()
     {
         winMenu.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     void Update()
     {
         partsCounter.text = parts + " / 7";
 
-        if(parts >= 6)
+        if(parts >= 2)
         {
             enemyScript.sightRange = 999999;
         }
@@ -132,8 +135,11 @@ public class SelectionScript : MonoBehaviour
 
         if(parts == 7)
         {
-            burnUpFireText.SetActive(true);
-            lighting.SetActive(true);
+            //burnUpFireText.SetActive(true);
+            //lighting.SetActive(true);
+            campfire.SetActive(true);
+            Destroy(vendizel);
+            Invoke(nameof(Win), 1f);
         }
 
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -153,7 +159,8 @@ public class SelectionScript : MonoBehaviour
 
                     if(selectionInfo.objectsName == "Eat puncake (E)")
                     {
-                        if(Input.GetKeyDown(KeyCode.E))
+                        printText.text = "Eat puncake";
+                        if (Input.GetMouseButtonDown(0))
                         {
                             Destroy(selection.gameObject);
                             printText.text = "";
@@ -162,19 +169,9 @@ public class SelectionScript : MonoBehaviour
                     }
                     if(selectionInfo.objectsName == "Burn campfire on (Needed lighter)")
                     {
-                        if(Input.GetKeyDown(KeyCode.E) && parts == 7)
-                        {
-                            campfire.SetActive(true);
-                            Destroy(vendizel);
-                            Invoke(nameof(Win), 5f);
-                        }
+                        printText.text = "";
                     }
-                    if(Input.GetKeyDown(KeyCode.E) && parts == 7)
-                    {
-                        campfire.SetActive(true);
-                        printText.text = selectionInfo.objectsName;
-                    }
-                    if(selectionInfo.objectsName == "Stick")
+                    if (selectionInfo.objectsName == "Stick")
                     {
                         if(Input.GetMouseButtonDown(0) && !handingAnyThing)
                         {

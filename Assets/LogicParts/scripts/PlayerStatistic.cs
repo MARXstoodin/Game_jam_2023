@@ -29,7 +29,7 @@ public class PlayerStatistic : MonoBehaviour
         {
             Hunger = 0;
         }
-        Hunger -= 0.3f * Time.deltaTime;
+        Hunger -= 0.5f * Time.deltaTime;
     }
 
     public void GetDamage()
